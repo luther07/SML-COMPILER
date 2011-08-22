@@ -4,8 +4,8 @@
 let rec maxargs_in_stm =
    function
       CompoundStm(a,b)
-       -> 1
+       -> 1 (* I don't know yet *)
      |AssignStm(a,b)
        -> 0
      |PrintStm(a)
-       -> 0
+       -> 1 (* I don't know yet *)

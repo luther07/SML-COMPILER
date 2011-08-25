@@ -4,7 +4,7 @@
 let rec (maxargs : stm -> int) =
    function
       CompoundStm(a,b)
-       -> 1 (* I don't know yet *)
+       -> maxargs(a) + maxargs(b)
      |AssignStm(a,b)
        -> 0
      |PrintStm([])

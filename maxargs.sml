@@ -3,16 +3,16 @@
  * given statement. For example, maxargs(prog) is 2.
  * For part 1, remember that print statements can contain expressions
  * that contain other print statements. *)
-fun maxargs_stm(CompoundStm(a,b))
-    = if maxargs_stm(a) >= maxargs_stm(b)
-         then maxargs_stm(a)
-         else maxargs_stm(b)
-   |maxargs_stm(AssignStm(a,b))
+fun maxargs(CompoundStm(a,b))
+    = if maxargs(a) >= maxargs_stm(b)
+         then maxargs(a)
+         else maxargs(b)
+   |maxargs(AssignStm(a,b))
     = maxargs_exp(b)
-   |maxargs_stm(PrintStm([]))
+   |maxargs(PrintStm([]))
     = 0
-   |maxargs_stm(PrintStm(x::xs))
-    = 1 + maxargs_stm(PrintStm(xs))
+   |maxargs(PrintStm(x::xs))
+    = 1 + maxargs(PrintStm(xs))
 and maxargs_exp(IdExp(a))
     = 0
    |maxargs_exp(NumExp(a))
@@ -20,6 +20,6 @@ and maxargs_exp(IdExp(a))
    |maxargs_exp(OpExp(a))
     = 0
    |maxargs_exp(EseqExp(a,b))
-    = if maxargs_stm(a) >= maxargs_exp(b)
-         then maxargs_stm(a)
+    = if maxargs(a) >= maxargs_exp(b)
+         then maxargs(a)
          else maxargs_exp(b)

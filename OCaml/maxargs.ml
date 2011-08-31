@@ -1,6 +1,11 @@
 (* Write an OCaml function (maxargs : stm->int) that tells the maximum number
  * of arguments of any print statement within any subexpression of a
- * given statement. For example, maxargs(prog) is 2. *)
+ * given statement. For example, maxargs(prog) is 2.
+ * For part 1, remeber that print statements can contain expressions that 
+ * contain other print statement.
+ *
+ * TODO: pattern-match for case where a print statement contains other
+ * print statements. *)
 let rec (maxargs : stm -> int) =
    function
       CompoundStm(a,b)

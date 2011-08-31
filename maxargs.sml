@@ -1,6 +1,8 @@
 (* Write an ML function (maxargs : stm->int) that tells the maximum number
  * of arguments of any print statement within any subexpression of a
- * given statement. For example, maxargs(prog) is 2. *)
+ * given statement. For example, maxargs(prog) is 2.
+ * For part 1, remember that print statements can contain expressions
+ * that contain other print statements. *)
 fun maxargs_stm(CompoundStm(a,b))
     = if maxargs_stm(a) >= maxargs_stm(b)
          then maxargs_stm(a)

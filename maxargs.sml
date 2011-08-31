@@ -17,7 +17,7 @@ and maxargs_exp(IdExp(a))
     = 0
    |maxargs_exp(NumExp(a))
     = 0
-   |maxargs_exp(OpExp(a))
+   |maxargs_exp(OpExp(a,b,c))
     = 0
    |maxargs_exp(EseqExp(a,b))
     = if maxargs(a) >= maxargs_exp(b)

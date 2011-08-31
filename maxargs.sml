@@ -5,5 +5,7 @@ fun maxargs(CompoundStm(a,b))
     = 1
    |maxargs(AssignStm(a,b))
     = 0
-   |maxargs(PrintStm(x::xs))
+   |maxargs(PrintStm([]))
     = 0
+   |maxargs(PrintStm(x::xs))
+    = 1 + maxargs(PrintStm(xs))

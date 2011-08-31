@@ -1,11 +1,23 @@
 (* Write an ML function (maxargs : stm->int) that tells the maximum number
  * of arguments of any print statement within any subexpression of a
  * given statement. For example, maxargs(prog) is 2. *)
-fun maxargs(CompoundStm(a,b))
-    = 1
-   |maxargs(AssignStm(a,b))
+fun maxargs_stm(CompoundStm(a,b))
+    = if maxargs_stm(a) >= maxargs_stm(b)
+         then maxargs_stm(a)
+         else maxargs_stm(b)
+   |maxargs_stm(AssignStm(a,b))
+    = maxargs_exp(b)
+   |maxargs_stm(PrintStm([]))
     = 0
-   |maxargs(PrintStm([]))
+   |maxargs_stm(PrintStm(x::xs))
+    = 1 + maxargs_stm(PrintStm(xs))
+and maxargs_exp(IdExp(a))
     = 0
-   |maxargs(PrintStm(x::xs))
-    = 1 + maxargs(PrintStm(xs))
+   |maxargs_exp(NumExp(a))
+    = 0
+   |maxargs_exp(OpExp(a))
+    = 0
+   |maxargs_exp(EseqExp(a,b))
+    = if maxargs_stm(a) >= maxargs_exp(b)
+         then maxargs_stm(a)
+         else maxargs_exp(b)

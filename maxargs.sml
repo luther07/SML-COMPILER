@@ -2,7 +2,10 @@
  * of arguments of any print statement within any subexpression of a
  * given statement. For example, maxargs(prog) is 2.
  * For part 1, remember that print statements can contain expressions
- * that contain other print statements. *)
+ * that contain other print statements.
+ *
+ * TODO: pattern-match for case where a print statement contains other
+ * print statements. *)
 fun maxargs(CompoundStm(a,b))
     = if maxargs(a) >= maxargs_stm(b)
          then maxargs(a)

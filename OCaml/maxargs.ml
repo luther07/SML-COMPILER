@@ -11,3 +11,15 @@ let rec (maxargs : stm -> int) =
        -> 0
      |PrintStm(x::xs)
        -> 1 + maxargs(PrintStm(xs))
+and (maxargs_exp : exp -> int) =
+   function
+      IdExp(a)
+       -> 0
+     |NumExp(a)
+       -> 0
+     |OpExp(a,b,c)
+       -> 0
+     |EseqExp(a,b)
+       -> if maxargs(a) >= maxargs_exp(b)
+             then maxargs(a)
+             else maxargs_exp(b)

@@ -7,7 +7,7 @@
  * TODO: pattern-match for case where a print statement contains other
  * print statements. *)
 fun maxargs(CompoundStm(a,b))
-    = if maxargs(a) >= maxargs_stm(b)
+    = if maxargs(a) >= maxargs(b)
          then maxargs(a)
          else maxargs(b)
    |maxargs(AssignStm(a,b))

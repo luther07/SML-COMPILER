@@ -6,6 +6,7 @@
  *
  * TODO: pattern-match for case where a print statement contains other
  * print statements. *)
+
 fun maxargs(CompoundStm(a,b))
     = if maxargs(a) >= maxargs(b)
          then maxargs(a)
@@ -14,8 +15,17 @@ fun maxargs(CompoundStm(a,b))
     = maxargs_exp(b)
    |maxargs(PrintStm([]))
     = 0
+   |maxargs(PrintStm([EseqExp(a,b)),rest_of_list])
+    = if maxargs(a) >= maxargs_exp(b)
+         then if maxargs(a) >= maxargs_exp(rest_of_list)
+                 then maxargs(a)
+                 else maxargs_exp(rest_of_list)
+         else if maxargs_exp(b) >= maxargs_exp(rest_of_list)
+                 then maxargs_exp(b)
+                 else maxargs_exp(rest_of_list)
    |maxargs(PrintStm(x::xs))
     = 1 + maxargs(PrintStm(xs))
+
 and maxargs_exp(IdExp(a))
     = 0
    |maxargs_exp(NumExp(a))

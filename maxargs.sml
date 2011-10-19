@@ -5,7 +5,8 @@
  * that contain other print statements.
  *
  * TODO: pattern-match for case where a print statement contains other
- * print statements. *)
+ * print statements. 
+ * TODO: fix syntax error, function doesn't compile *)
 
 fun maxargs(CompoundStm(a,b))
     = if maxargs(a) >= maxargs(b)

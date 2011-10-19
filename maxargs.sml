@@ -3,10 +3,10 @@
  * given statement. For example, maxargs(prog) is 2.
  * For part 1, remember that print statements can contain expressions
  * that contain other print statements.
- *
- * TODO: pattern-match for case where a print statement contains other
- * print statements. 
- * TODO: fix syntax error, function doesn't compile *)
+ ******************************************
+ * Function does pass the test, returning value 2 for argument prog.
+ * I fixed the syntax errors, but I have not verified that my
+ * function is correct. *)
 
 fun maxargs(CompoundStm(a,b))
     = if maxargs(a) >= maxargs(b)

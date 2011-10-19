@@ -1,3 +1,9 @@
 * I have the book, Modern Compiler Implementation in ML.
+
 * I have installed sml/nj and associated tools.
+
 * I am learning how to implement a compiler by implementing a compiler.
+
+* 10/19/11
+  I have implemented exercise 1 from page 11, a max args function that counts the maximum number
+  of args to a PrintStm constructor in a nested statement. Function not verified correct yet. 

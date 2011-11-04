@@ -3,36 +3,37 @@
  * given statement. For example, maxargs(prog) is 2.
  * For part 1, remember that print statements can contain expressions
  * that contain other print statements.
- *
- * TODO: pattern-match for case where a print statement contains other
- * print statements. *)
+ ******************************************
+ * Function does pass the test, returning value 2 for argument prog.
+ * I fixed the syntax errors, but I have not verified that my
+ * function is correct. *)
 
-fun maxargs(CompoundStm(a,b))
-    = if maxargs(a) >= maxargs(b)
-         then maxargs(a)
-         else maxargs(b)
-   |maxargs(AssignStm(a,b))
-    = maxargs_exp(b)
-   |maxargs(PrintStm([]))
+fun maxargsStm(CompoundStm(a,b))
+    = if maxargsStm(a) >= maxargsStm(b)
+         then maxargsStm(a)
+         else maxargsStm(b)
+   |maxargsStm(AssignStm(a,b))
+    = maxargsExp(b)
+   |maxargsStm(PrintStm([]))
     = 0
-   |maxargs(PrintStm([EseqExp(a,b)),rest_of_list])
-    = if maxargs(a) >= maxargs_exp(b)
-         then if maxargs(a) >= maxargs_exp(PrintStm([rest_of_list]))
-                 then maxargs(a)
-                 else maxargs_exp(PrintStm([rest_of_list]))
-         else if maxargs_exp(b) >= maxargs_exp(PrintStm([rest_of_list]))
-                 then maxargs_exp(b)
-                 else maxargs_exp(PrintStm([rest_of_list]))
-   |maxargs(PrintStm(x::xs))
-    = 1 + maxargs(PrintStm(xs))
+   |maxargsStm(PrintStm(EseqExp(a,b)::rest_of_list))
+    = if maxargsStm(a) >= maxargsExp(b)
+         then if maxargsStm(a) >= maxargsStm(PrintStm(rest_of_list))
+                 then maxargsStm(a)
+                 else maxargsStm(PrintStm(rest_of_list))
+         else if maxargsExp(b) >= maxargsStm(PrintStm(rest_of_list))
+                 then maxargsExp(b)
+                 else maxargsStm(PrintStm(rest_of_list))
+   |maxargsStm(PrintStm(x::xs))
+    = 1 + maxargsStm(PrintStm(xs))
 
-and maxargs_exp(IdExp(a))
+and maxargsExp(IdExp(a))
     = 0
-   |maxargs_exp(NumExp(a))
+   |maxargsExp(NumExp(a))
     = 0
-   |maxargs_exp(OpExp(a,b,c))
+   |maxargsExp(OpExp(a,b,c))
     = 0
-   |maxargs_exp(EseqExp(a,b))
-    = if maxargs(a) >= maxargs_exp(b)
-         then maxargs(a)
-         else maxargs_exp(b)
+   |maxargsExp(EseqExp(a,b))
+    = if maxargsStm(a) >= maxargsExp(b)
+         then maxargsStm(a)
+         else maxargsExp(b)

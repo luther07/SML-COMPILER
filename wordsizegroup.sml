@@ -3,7 +3,7 @@
    lists of those strings that are anagrams/permutations of each other.
 
    Function, wordsizegroup, is just a beginning, to map a list of words to a list of
-   their corresponding sizes. *)
-fun wordsizegroup input : int list =
-   map (fn x => size x) input
+   tuples containing the string size and value. *)
+fun wordsizegroup input : (int*string) list =
+   map (fn x => (size x,x)) input
 

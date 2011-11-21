@@ -11,8 +11,11 @@
  * that some identifiers map to different integers as a result of the
  * statement.
  ***********************************************************************)
-
-fun interpStm(statement:stm, tbl:(id * int) list): (id * int) list =
+(* stm * (id * int) list -> (id * int) list *)
+fun interpStm(CompoundStm(a,b), tbl: (id, int) list)
+    = (interpStm(a); interpStm(b))
+   |interpStm(AssignStm(a,b), tbl: (id, int) list)
+    = 
 
 and interpExp(expression:exp, tbl:(id * int) list): (int * (id * int) list) =
     

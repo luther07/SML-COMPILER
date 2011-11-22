@@ -12,10 +12,24 @@
  * statement.
  ***********************************************************************)
 (* stm * (id * int) list -> (id * int) list *)
-fun interpStm(CompoundStm(a,b), tbl: (id, int) list)
-    = (interpStm(a); interpStm(b))
-   |interpStm(AssignStm(a,b), tbl: (id, int) list)
-    = 
+fun interpStm(CompoundStm(a,b), tbl:(id * int) list)
+    = (interpStm(a); interpStm(b); tbl)
+   |interpStm(AssignStm(a,b), tbl:(id * int) list)
+    = (a,b)::tbl
+   |interpStm(PrintStm(first::rest), tbl:(id * int) list)
+    = (print first; print "\n"; tbl)
 
-and interpExp(expression:exp, tbl:(id * int) list): (int * (id * int) list) =
-    
+and interpExp(IdExp(a), tbl:(id * int) list)
+    = 
+   |interpExp(NumExp(a), tbl:(id * int) list)
+    =
+   |interpExp(OpExp(a,b,c), tbl:(id * int) list)
+    = 
+   |interpExp(EseqExp(a,b), tbl:(id * int) list)
+    = (interpStm(a); interpExp(b); tbl)
+
+fun update(t1: (id * int) list, c: id, i: int)
+    = (c, i) :: t1
+
+fun lookup(table: (id * int) table)
+    = 

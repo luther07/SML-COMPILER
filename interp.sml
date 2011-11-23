@@ -20,7 +20,7 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list)
     = (print first; print "\n"; tbl)
 
 and interpExp(IdExp(a), tbl:(id * int) list)
-    = (lookup(tbl, a), tbl)
+    = (hd(lookup(tbl, a)), tbl)
    |interpExp(NumExp(a), tbl:(id * int) list)
     = (a, tbl)
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list)
@@ -34,8 +34,8 @@ and interpExp(IdExp(a), tbl:(id * int) list)
    |interpExp(EseqExp(a,b), tbl:(id * int) list)
     = (interpStm(a); interpExp(b); tbl)
 
-fun update(t1: (id * int) list, c: id, i: int)
-    = (c, i) :: t1
+fun update([], c: id, i: int) = (c, i) :: []
+  | update(x::y, c: id, i: int) = (c, i) :: x :: y
 
 fun lookup([], a) = []
   | lookup((x,y)::pairs, a) = if (x = a) then [y] else lookup(pairs, a) 

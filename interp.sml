@@ -23,7 +23,11 @@ fun lookup([], a: id): int list = []
 fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
     (interpStm(a, tbl); interpStm(b, tbl))
    |interpStm(AssignStm(a,b), tbl:(id * int) list): (id*int) list =
-    update(tbl,a,interpExp(b,tbl))
+    let val =
+       interpExp(b,tbl)
+    in 
+       update(tbl,a,)
+    end
    |interpStm(PrintStm([]), tbl: (id * int) list): (id*int) list =
     tbl
    |interpStm(PrintStm(first::rest), tbl:(id * int) list): (id * int) list =
@@ -45,6 +49,7 @@ and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
      end;
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
      (a, tbl)
+(* interpExp branch is syntactically correct *)
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list)  =
      let 
         val (result1, t1) = interpExp(a, tbl);

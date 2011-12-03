@@ -49,32 +49,32 @@ and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
      end;
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
      (a, tbl)
-(* interpExp branch is syntactically correct *)
+(* interpExp(OpExp) branch is syntactically correct *)
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list)  =
      let 
         val (result1, t1) = interpExp(a, tbl);
         val (result2, t2) = interpExp(c, t1)
      in 
-        (result1+result2, t2)
+        (result1 + result2, t2)
      end
    |interpExp(OpExp(a, Minus, c), tbl:(id * int) list): (int*(id*int) list) =
      let 
         val (result1, t1) = interpExp(a, tbl)
         val (result2, t2) = interpExp(c, t1)
      in 
-        (result1-result2, t2)
+        (result1 - result2, t2)
      end
    |interpExp(OpExp(a, Times, c), tbl:(id * int) list): (int*(id*int) list) =
      let 
         val (result1, t1) = interpExp(a, tbl)
-        let val (result2, t2) = interpExp(c, t1)
+        val (result2, t2) = interpExp(c, t1)
      in 
-        (result1*result2, t2)
+        (result1 * result2, t2)
      end
    |interpExp(OpExp(a, Div, c), tbl:(id * int) list): (int*(id*int) list) =
      let 
         val (result1, t1) = interpExp(a, tbl)
-        let val (result2, t2) = interpExp(c, t1)
+        val (result2, t2) = interpExp(c, t1)
      in 
         (result1 div result2, t2)
      end

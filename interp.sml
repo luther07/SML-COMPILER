@@ -38,7 +38,7 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
              (Int.toString aNum, aTab)
           end
        in
-          (print aString; aTable)
+          (print aString; print "\n"; aTable)
        end
 
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =

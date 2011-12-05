@@ -18,4 +18,13 @@ val prog =
            OpExp(NumExp 10, Times, IdExp"a"))),
    PrintStm[IdExp "b"]))
 
+(* stm prog1 is evaluated correctly by the interpreter.
+   The expression inside PrintStm constructor is evaluated to 8,
+   which is printed to stdout, followed by a new line. Finally,
+   the table of bindings is the return value of the expression. *)
 
+val prog1: stm = PrintStm([OpExp(NumExp 5, Plus, NumExp 3)])
+
+val myid: id = "word"
+
+val mytable: (id*int) list = (myid,1) :: []

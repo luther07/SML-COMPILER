@@ -25,6 +25,12 @@ val prog =
 
 val prog1: stm = PrintStm([OpExp(NumExp 5, Plus, NumExp 3)])
 
+val prog2: stm = AssignStm("a", NumExp 8)
+
+val prog3: stm = AssignStm("a", OpExp(NumExp 5, Plus, NumExp 3))
+
 val myid: id = "word"
 
 val mytable: (id*int) list = (myid,1) :: []
+
+exception Foo

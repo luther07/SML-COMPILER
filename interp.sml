@@ -42,10 +42,11 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
        end
 
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
-       let val aValue = 
-          hd(lookup(tbl, a))
+       let 
+          val aResult = lookup(tbl, a)
+          val chkResult = if aResult = [] then ~1000000 else hd aResult
        in
-          (aValue, tbl)
+          (chkResult, tbl)
        end
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
        (a, tbl)

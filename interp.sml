@@ -14,7 +14,7 @@
 (* helper functions *)
 
 fun update([], c: id, i: int): (id*int) list = (c, i) :: []
-  | update(tbl, c: id, i: int): (id*int) list = (c, i) :: tbl
+  | update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
 
 fun lookup([], a: id): int list = []
   | lookup((x:id,y:int) :: pairs, a: id): int list = if (x=a) then [y] else lookup(pairs, a)
@@ -23,60 +23,64 @@ fun lookup([], a: id): int list = []
 fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
     (interpStm(a, tbl); interpStm(b, tbl))
    |interpStm(AssignStm(a,b), tbl:(id * int) list): (id*int) list =
-    let val =
-       interpExp(b,tbl)
-    in 
-       update(tbl,a,)
-    end
-   |interpStm(PrintStm([]), tbl: (id * int) list): (id*int) list =
-    tbl
-   |interpStm(PrintStm(first::rest), tbl:(id * int) list): (id * int) list =
-     let val (aString, aTable) =
-       let
-          val (aNum, aTab) = interpExp(first, tbl);
-       in
-          (Int.toString aNum, aTab)
+       let val (aNum, aTab) =
+          interpExp(b,tbl)
+       in 
+          update(tbl, a, aNum)
        end
-     in
-       (print aString;
-        aTable)
-     end
+   |interpStm(PrintStm([]), tbl: (id * int) list): (id*int) list =
+       tbl
+   |interpStm(PrintStm(first::rest), tbl:(id * int) list): (id * int) list =
+       let val (aString, aTable) =
+          let
+             val (aNum, aTab) = interpExp(first, tbl);
+          in
+             (Int.toString aNum, aTab)
+          end
+       in
+          (print aString; aTable)
+       end
+
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
-     let
-        val aValue = hd(lookup(tbl, a))
-     in
-        (aValue, tbl)
-     end;
+       let val aValue = 
+          hd(lookup(tbl, a))
+       in
+          (aValue, tbl)
+       end
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
-     (a, tbl)
+       (a, tbl)
 (* interpExp(OpExp) branch is syntactically correct *)
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list)  =
-     let 
-        val (result1, t1) = interpExp(a, tbl);
-        val (result2, t2) = interpExp(c, t1)
-     in 
-        (result1 + result2, t2)
-     end
+       let 
+          val (result1, t1) = interpExp(a, tbl);
+          val (result2, t2) = interpExp(c, t1)
+       in 
+          (result1 + result2, t2)
+       end
    |interpExp(OpExp(a, Minus, c), tbl:(id * int) list): (int*(id*int) list) =
-     let 
-        val (result1, t1) = interpExp(a, tbl)
-        val (result2, t2) = interpExp(c, t1)
-     in 
-        (result1 - result2, t2)
-     end
+       let 
+          val (result1, t1) = interpExp(a, tbl)
+          val (result2, t2) = interpExp(c, t1)
+       in 
+          (result1 - result2, t2)
+       end
    |interpExp(OpExp(a, Times, c), tbl:(id * int) list): (int*(id*int) list) =
-     let 
-        val (result1, t1) = interpExp(a, tbl)
-        val (result2, t2) = interpExp(c, t1)
-     in 
-        (result1 * result2, t2)
-     end
+       let 
+          val (result1, t1) = interpExp(a, tbl)
+          val (result2, t2) = interpExp(c, t1)
+       in 
+          (result1 * result2, t2)
+       end
    |interpExp(OpExp(a, Div, c), tbl:(id * int) list): (int*(id*int) list) =
-     let 
-        val (result1, t1) = interpExp(a, tbl)
-        val (result2, t2) = interpExp(c, t1)
-     in 
-        (result1 div result2, t2)
-     end
+       let 
+          val (result1, t1) = interpExp(a, tbl)
+          val (result2, t2) = interpExp(c, t1)
+       in 
+          (result1 div result2, t2)
+       end
    |interpExp(EseqExp(a,b), tbl:(id * int) list): (int*(id*int) list) =
-     (interpStm(a, tbl); interpExp(b, tbl));
+       let val aTab =
+          interpStm(a, tbl)
+       in 
+          interpExp(b, aTab)
+       end

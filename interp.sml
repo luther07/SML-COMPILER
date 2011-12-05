@@ -41,6 +41,8 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
           (print aString; print "\n"; aTable)
        end
 
+(* Function returns ~1000000 (negative 1 million) if call to lookup returns empty list.
+   I will look to improve this edge case in the future. *)
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
           val aResult = lookup(tbl, a)

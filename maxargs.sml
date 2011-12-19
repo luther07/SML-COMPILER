@@ -6,7 +6,11 @@
  ******************************************
  * Function does pass the test, returning value 2 for argument prog.
  * I fixed the syntax errors, but I have not verified that my
- * function is correct. *)
+ * function is correct. 
+ ******************************************
+ * Identified error: I think I need to handle the case there's a 
+ * PrintStm with an EseqExp sandwiched in the middle of its args.
+ ******************************************)
 
 fun maxargsStm(CompoundStm(a,b))
     = if maxargsStm(a) >= maxargsStm(b)

@@ -5,11 +5,8 @@
  * that contain other print statements.
  ******************************************
  * Function does pass the test, returning value 2 for argument prog.
- * I fixed the syntax errors, but I have not verified that my
- * function is correct. 
- ******************************************
- * Identified error: I think I need to handle the case there's a 
- * PrintStm with an EseqExp sandwiched in the middle of its args.
+ * Function also returns correct response from a nested PrintStm
+ * when sandwiched inside an EseqExp inside a PrintStm.
  ******************************************)
 
 fun maxargsStm(CompoundStm(a,b))
@@ -18,18 +15,17 @@ fun maxargsStm(CompoundStm(a,b))
          else maxargsStm(b)
    |maxargsStm(AssignStm(a,b))
     = maxargsExp(b)
-   |maxargsStm(PrintStm([]))
-    = 0
-   |maxargsStm(PrintStm(EseqExp(a,b)::rest_of_list))
-    = if maxargsStm(a) >= maxargsExp(b)
-         then if maxargsStm(a) >= maxargsStm(PrintStm(rest_of_list))
-                 then maxargsStm(a)
-                 else maxargsStm(PrintStm(rest_of_list))
-         else if maxargsExp(b) >= maxargsStm(PrintStm(rest_of_list))
-                 then maxargsExp(b)
-                 else maxargsStm(PrintStm(rest_of_list))
-   |maxargsStm(PrintStm(x::xs))
-    = 1 + maxargsStm(PrintStm(xs))
+   |maxargsStm(PrintStm(xs)) =
+       let
+          val printArgs = length xs
+          fun traverse (member, maxi) =
+             case member of
+                [] => 0
+               |last::[] => if maxi > maxargsExp(last) then maxi else maxargsExp(last)
+               |first::rest => if maxi > maxargsExp(first) then traverse(rest,maxi) else traverse(rest, maxargsExp(first))
+       in
+          traverse(xs,printArgs)
+       end
 
 and maxargsExp(IdExp(a))
     = 0

@@ -5,10 +5,16 @@
 * I am learning how to implement a compiler by implementing a compiler.
 
 * 10/19/11
-  I have implemented exercise 1 from page 11, a max args function that counts the maximum number
-  of args to a PrintStm constructor in a nested statement. Cursory testing shows the function
-  to be likely correct.
+  I have implemented part 1 of the Straight Line Program Interpreter from page 11, a max args 
+  function that counts the maximum number of args to a PrintStm constructor in a nested statement. 
+  I have tested the function on some difficult, nested expressions, and the function returned
+  accurate results.
 
 * 10/20/11
-  I have finished with renaming the mutually recursive functions to maxargsStm and maxargsExp.
+  Part 2 of the Straight Line Interpreter, I have finished with renaming the mutually recursive 
+  functions to maxargsStm and maxargsExp.
   
+* 1/5/12
+  Status of part 2, I have completed the Interpreter, which is two mutually recursive functions 
+  to interpret Statements and Expressions in the given language. The functions maintain a table
+  of key/value bindings for keeping track of variable bindings. 

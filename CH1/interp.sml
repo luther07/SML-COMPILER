@@ -21,7 +21,12 @@ fun lookup([], a: id): int list = []
 
 (* stm * (id * int) list -> (id * int) list *)
 fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
-    (interpStm(a, tbl); interpStm(b, tbl))
+    let val firstTable = 
+       interpStm(a, tbl)
+    in
+       interpStm(b, firstTable)
+    end
+    (* (interpStm(a, tbl); interpStm(b, tbl)) *)
    |interpStm(AssignStm(a,b), tbl:(id * int) list): (id*int) list =
        let val (aNum, aTab) =
           interpExp(b,tbl)

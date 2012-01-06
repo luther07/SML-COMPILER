@@ -11,10 +11,18 @@ fun insert(key,LEAF) = TREE(LEAF,key,LEAF)
          then TREE(l,k,insert(key,r))
        else TREE(l,key,r)
 
-fun lookup(key,LEAF) = false
+fun lookupBool(key,LEAF) = false
   | lookup(key,TREE(l,k,r)) =
        if key = k
          then true
        else if key>k
          then lookup(key,r)
        else lookup(key,l)
+
+fun lookupKV(key,LEAF) = false
+  | lookupKV(key,TREE(l,k,r)) =
+       if key = k
+         then k
+       else if key>k
+         then lookupKV(key,r)
+       else lookupKV(key,l)

@@ -22,6 +22,6 @@
 * 1/6/12
   Working on chapter 1, Exercises 1.1.
   Parts a and b are complete. This was my first use of exceptions.
-  Exception will be thrown in lookupkv if the key isn't found in the binary search tree.
+  Exception will be thrown in the lookupkv function if the key isn't found in the binary search tree.
   Went back to part 2 and added an exception to the lookup function.
   The lookup function used by the interpreter will throw an exception if the binding isn't found.

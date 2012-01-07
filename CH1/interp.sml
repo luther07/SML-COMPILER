@@ -13,10 +13,12 @@
  ***********************************************************************)
 (* helper functions *)
 
+exception Table_lookup_key_not_found of int
+
 fun update([], c: id, i: int): (id*int) list = (c, i) :: []
   | update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
 
-fun lookup([], a: id): int list = []
+fun lookup([], a: id): int list = raise Table_lookup_key_not_found(~1000000)
   | lookup((x:id,y:int) :: pairs, a: id): int list = if (x=a) then [y] else lookup(pairs, a)
 
 (* stm * (id * int) list -> (id * int) list *)
@@ -48,14 +50,13 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
           (print aString; print "\n"; aTable)
        end
 
-(* Function returns ~1000000 (negative 1 million) if call to lookup returns empty list.
-   I will look to improve this edge case in the future. *)
+(* The call to the lookup function below will throw Table_lookup_key_not_found exception. *)
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val aResult = lookup(tbl, a)
-          val chkResult = if aResult = [] then ~1000000 else hd aResult
+          val subResult = lookup(tbl, a)
+          val aResult = hd subResult
        in
-          (chkResult, tbl)
+          (aResult, tbl)
        end
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
        (a, tbl)

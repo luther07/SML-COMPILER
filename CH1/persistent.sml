@@ -1,7 +1,10 @@
 type key = string
+
 datatype tree = LEAF | TREE of tree * key * tree
 
 val empty = LEAF
+
+exception Key_not_found of key
 
 fun insert(key,LEAF) = TREE(LEAF,key,LEAF)
   | insert(key,TREE(l,k,r)) =
@@ -11,18 +14,20 @@ fun insert(key,LEAF) = TREE(LEAF,key,LEAF)
          then TREE(l,k,insert(key,r))
        else TREE(l,key,r)
 
-fun lookupBool(key,LEAF) = false
-  | lookup(key,TREE(l,k,r)) =
+fun lookupbool(key,LEAF) = false
+  | lookupbool(key,TREE(l,k,r)) =
        if key = k
          then true
        else if key>k
-         then lookup(key,r)
-       else lookup(key,l)
+         then lookupbool(key,r)
+       else lookupbool(key,l)
 
-fun lookupKV(key,LEAF) = false
-  | lookupKV(key,TREE(l,k,r)) =
+(* Function lookupkv throws Key_not_found exception. Any expression using this function should handle the exception. *)
+
+fun lookupkv(key,LEAF) = raise Key_not_found("")
+  | lookupkv(key,TREE(l,k,r)) =
        if key = k
          then k
        else if key>k
-         then lookupKV(key,r)
-       else lookupKV(key,l)
+         then lookupkv(key,r)
+       else lookupkv(key,l)

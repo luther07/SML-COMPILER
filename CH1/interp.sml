@@ -13,12 +13,12 @@
  ***********************************************************************)
 (* helper functions *)
 
-exception Table_lookup_key_not_found of int
+exception Key_binding_not_found of int
 
 fun update([], c: id, i: int): (id*int) list = (c, i) :: []
   | update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
 
-fun lookup([], a: id): int list = raise Table_lookup_key_not_found(~1000000)
+fun lookup([], a: id): int list = raise Key_binding_not_found(~1000000)
   | lookup((x:id,y:int) :: pairs, a: id): int list = if (x=a) then [y] else lookup(pairs, a)
 
 (* stm * (id * int) list -> (id * int) list *)

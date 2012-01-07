@@ -8,7 +8,7 @@
 
 fun test_lookupkv(key:key, LEAF): bool =
     let 
-       val returnval = lookupkv(key:string, LEAF) handle Key_not_found(a_string) => a_string
+       val returnval = lookupkv(key:string, LEAF) handle Key_not_found_in_binary_search_tree(a_string) => a_string
     in
        case returnval of
           "" => true
@@ -17,7 +17,7 @@ fun test_lookupkv(key:key, LEAF): bool =
    
    |test_lookupkv(key:string, TREE(l,k,r)): bool = 
     let
-       val returnval = lookupkv(key:key, TREE(l,k,r)) handle Key_not_found(a_string) => a_string
+       val returnval = lookupkv(key:key, TREE(l,k,r)) handle Key_not_found_in_binary_search_tree(a_string) => a_string
     in
        if returnval = key
          then true

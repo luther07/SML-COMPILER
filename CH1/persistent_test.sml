@@ -28,8 +28,16 @@ fun test_lookupkv(key:key, LEAF): bool =
 
 (* Test cases for empty and non-empty binary trees. *)
 
+(* Searching for any string in an empty tree, 
+   returns boolean true if exception is handled. *)
 val key_not_exists_in_empty_tree: bool = test_lookupkv("test",LEAF)
 
+(* Searching for string "test" in a tree containing "test" and two LEAFs
+   returns boolean true if the string returned by function lookupkv equals "test" *)
 val key_exists_in_nonempty_tree: bool = test_lookupkv("test",TREE(LEAF,"test",LEAF))
 
+(* Searching for string "test" in a tree containing a string which is not equal to "test",
+   returns boolean true if either the string returned by function lookupkv equals "test
+   or if it equals "", which is what is returned by the function what it handles 
+   a key not found exception. *)
 val key_not_exists_in_nonempty_tree: bool = test_lookupkv("test", TREE(LEAF,"somevalue",LEAF))

@@ -50,7 +50,10 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
           (print aString; print "\n"; aTable)
        end
 
-(* The call to the lookup function below will throw Table_lookup_key_not_found exception. *)
+(* The call to the lookup function below will throw a Table_lookup_key_not_found 
+   exception if the key is not found in the table. This exception makes sense,
+   because if a variable binding does not exist when it should, an exception should occur. *)
+
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
           val subResult = lookup(tbl, a)

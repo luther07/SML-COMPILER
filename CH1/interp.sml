@@ -61,45 +61,45 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
           val subResult = lookup(tbl, a)
-          val aResult = hd subResult
+          val intResult = hd subResult
        in
-          (aResult, tbl)
+          (intResult, tbl)
        end
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
        (a, tbl)
 
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val (result1, t1) = interpExp(a, tbl);
-          val (result2, t2) = interpExp(c, t1)
+          val (resultOne, t1) = interpExp(a, tbl);
+          val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
-          ((result1 + result2), t2)
+          ((resultOne + resultTwo), bindingsTable)
        end
    |interpExp(OpExp(a, Minus, c), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val (result1, t1) = interpExp(a, tbl)
-          val (result2, t2) = interpExp(c, t1)
+          val (resultOne, t1) = interpExp(a, tbl)
+          val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
-          ((result1 - result2), t2)
+          ((resultOne - resultTwo), bindingsTable)
        end
    |interpExp(OpExp(a, Times, c), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val (result1, t1) = interpExp(a, tbl)
-          val (result2, t2) = interpExp(c, t1)
+          val (resultOne, t1) = interpExp(a, tbl)
+          val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
-          ((result1 * result2), t2)
+          ((resultOne * resultTwo), bindingsTable)
        end
    |interpExp(OpExp(a, Div, c), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val (result1, t1) = interpExp(a, tbl)
-          val (result2, t2) = interpExp(c, t1)
+          val (resultOne, t1) = interpExp(a, tbl)
+          val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
-          ((result1 div result2), t2)
+          ((resultOne div resultTwo), bindingsTable)
        end
 
    |interpExp(EseqExp(a,b), tbl:(id * int) list): (int*(id*int) list) =
        let 
-          val aTable = interpStm(a, tbl)
+          val bindingsTable = interpStm(a, tbl)
        in 
-          interpExp(b, aTable)
+          interpExp(b, bindingsTable)
        end

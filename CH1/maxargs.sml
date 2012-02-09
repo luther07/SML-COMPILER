@@ -21,8 +21,12 @@ fun maxargsStm(CompoundStm(a,b))
           fun traverse (member, maxi) =
              case member of
                 [] => 0
-               |last::[] => if maxi > maxargsExp(last) then maxi else maxargsExp(last)
-               |first::rest => if maxi > maxargsExp(first) then traverse(rest,maxi) else traverse(rest, maxargsExp(first))
+               |last::[] => if maxi > maxargsExp(last) 
+                              then maxi 
+                            else maxargsExp(last)
+               |first::rest => if maxi > maxargsExp(first) 
+                                 then traverse(rest,maxi) 
+                               else traverse(rest, maxargsExp(first))
        in
           traverse(xs,printArgs)
        end

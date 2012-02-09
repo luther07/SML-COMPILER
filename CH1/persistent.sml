@@ -22,7 +22,8 @@ fun lookupbool(key,LEAF) = false
          then lookupbool(key,r)
        else lookupbool(key,l)
 
-(* Function lookupkv throws Key_not_found_in_binary_search_tree exception. Any expression using this function should handle the exception. *)
+(* Function lookupkv throws Key_not_found_in_binary_search_tree exception.
+   Any expression using this function should handle the exception. *)
 
 fun lookupkv(key,LEAF) = raise Key_not_found_in_binary_search_tree("")
   | lookupkv(key,TREE(l,k,r)) =

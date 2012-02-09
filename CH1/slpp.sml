@@ -1,7 +1,5 @@
-Control.Print.printDepth := 60;
-
 (* val prog is a test for function maxargs. 
-   The correct value that maxargs should compute is 10. *)
+(* The correct value that maxargs should compute is 10. *)
 
 type id = string
 datatype binop = Plus | Minus | Times | Div

@@ -54,9 +54,9 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
        end
 
 (* The call to the lookup function below will throw exception,
-   Table_lookup_key_not_found if the key is not found in the table. This
-   exception makes sense. If a variable binding does not exist when
-   it should, an exception should be thrown. *)
+ * Table_lookup_key_not_found if the key is not found in the table. This
+ * exception makes sense. If a variable binding does not exist when
+ * it should, an exception should be thrown. *)
 
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 

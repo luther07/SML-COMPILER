@@ -1,9 +1,9 @@
 (* Test function to confirm that the function, lookupkv, does what it should.
-   Searching for any value inside a tree that is only an empty leaf will not
-   find the searched-for value. Instead the test function extracts the string
-   that is encapsulated in the exception, an empty string. The test returns
-   true if the val, returnval, matches an empty string. Otherwise the function
-   returns false. *)
+ * Searching for any value inside a tree that is only an empty leaf will not
+ * find the searched-for value. Instead the test function extracts the string
+ * that is encapsulated in the exception, an empty string. The test returns
+ * true if the val, returnval, matches an empty string. Otherwise the function
+ * returns false. *)
 
 fun test_lookupkv(key:key, LEAF): bool =
     let 

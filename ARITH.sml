@@ -1,5 +1,5 @@
-(* signature from Paulson Exercise 2.24, which hides any components not mentioned below,
-   making them private *)
+(* signature from Paulson Exercise 2.24, which hides any components not
+   mentioned below, making them private *)
 signature ARITH =
    sig
    type t

@@ -5,4 +5,4 @@
 fun fib(n: int) = case n of
   0 => 0
  |1 => 1
- |any => fib(any-1) + fib(any-2) 
+ |any => fib(any-1) + fib(any-2)

@@ -1,5 +1,4 @@
-(* ML for the Working Programmer, Exercise 2.5, page 27 
-   10/18/11 Added parenthesis for correct behavior *)
+(* ML for the Working Programmer, Exercise 2.5, page 27. *)
 fun dateverif d m =
    if (m = "September" 
       orelse m = "April" 

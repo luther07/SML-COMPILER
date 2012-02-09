@@ -1,9 +1,7 @@
 Control.Print.printDepth := 60;
 
-(* The expression below shows a case that isn't handled correctly by
-   maxargsStm function. The function should count the maximum number
-   of arguments to a print statement. For "prog" below it should return
-   10, but it returns 11. Therefore the function is not correct. *)
+(* val prog is a test for function maxargs. 
+   The correct value that maxargs should compute is 10. *)
 
 type id = string
 datatype binop = Plus | Minus | Times | Div

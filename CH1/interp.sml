@@ -11,10 +11,10 @@
  * that some identifiers map to different integers as a result of the
  * statement.
  ***********************************************************************)
-(* helper functions *)
 
 exception Key_binding_not_found of int
 
+(* helper functions *)
 fun update([], c: id, i: int): (id*int) list = (c, i) :: []
   | update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
 
@@ -24,7 +24,7 @@ fun lookup([], a: id): int list = raise Key_binding_not_found(~1000000)
         then [y] 
       else lookup(pairs, a)
 
-(* stm * (id * int) list -> (id * int) list *)
+(* mutually recursive functions *)
 fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
     let 
        val firstTable = interpStm(a, tbl)
@@ -55,8 +55,8 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
 
 (* The call to the lookup function below will throw exception,
    Table_lookup_key_not_found if the key is not found in the table. This
-   exception makes sense, because if a variable binding does not exist when
-   it should, an exception should occur. *)
+   exception makes sense. If a variable binding does not exist when
+   it should, an exception should be thrown. *)
 
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
@@ -68,7 +68,6 @@ and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
    |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
        (a, tbl)
 
-(* interpExp(OpExp) branch is syntactically correct *)
    |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list) =
        let 
           val (result1, t1) = interpExp(a, tbl);

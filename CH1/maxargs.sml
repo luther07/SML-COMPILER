@@ -2,12 +2,7 @@
  * of arguments of any print statement within any subexpression of a
  * given statement. For example, maxargs(prog) is 2.
  * For part 1, remember that print statements can contain expressions
- * that contain other print statements.
- ******************************************
- * Function does pass the test, returning value 2 for argument prog.
- * Function also returns correct response from a nested PrintStm
- * when sandwiched inside an EseqExp inside a PrintStm.
- ******************************************)
+ * that contain other print statements. *)
 
 fun maxargsStm(CompoundStm(a,b))
     = if maxargsStm(a) >= maxargsStm(b)

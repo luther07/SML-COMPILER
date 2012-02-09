@@ -1,4 +1,4 @@
-Control.Print.printDepth := 60;
+(* This is the definition of the abstract syntax that I'm working with *) 
 
 type id = string
 datatype binop = Plus | Minus | Times | Div
@@ -18,10 +18,7 @@ val prog =
            OpExp(NumExp 10, Times, IdExp"a"))),
    PrintStm[IdExp "b"]))
 
-(* stm prog1 is evaluated correctly by the interpreter.
-   The expression inside PrintStm constructor is evaluated to 8,
-   which is printed to stdout, followed by a new line. Finally,
-   the table of bindings is the return value of the expression. *)
+(* Example expressions for testing *)
 
 val prog1: stm = PrintStm([OpExp(NumExp 5, Plus, NumExp 3)])
 

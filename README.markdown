@@ -29,3 +29,6 @@
   function if the key isn't found in the binary search tree. Went back to
   part 2 and added an exception to the lookup function. The lookup function
   used by the interpreter will throw an exception if the binding isn't found.
+
+  TODO: currently researching to identify best balanced BST for functional symbol table in Sedgewick[1998].
+  TODO: write good tests to cover the code in interp.sml and persistent.sml.

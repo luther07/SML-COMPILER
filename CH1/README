@@ -26,4 +26,12 @@ Exercise 1c: These trees are not balanced; demonstrate the behavior on the
                             h
                              i
 
-Exercise 1d: TODO (more challenging)
+Exercise 1d: TODO (more challenging): Balanced Binary Search Trees
+             From Sedgewick[1997], which balanced BST data structure is best for a functional-style symbol table?
+             ?Randomized BST: has average-case performance which is an improvement on standard BST's, 
+                              because standard BST's depend on receiving input for insertion with 
+                              random ordering of their keys.
+             ?Splay BST:
+             ?Top-Down 2-3-4 BST:
+             ?Red-Black Trees:
+             ?Skip Lists:

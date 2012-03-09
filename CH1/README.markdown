@@ -1,7 +1,7 @@
 * Exercise 1a--Implement a member function that returns true if the item is found else false. 
-  * Done, see function lookupbool in persistent.sml. Still need to write some tests.
+  * Done, see function `lookupbool` in persistent.sml. Still need to write some tests.
 * Exercise 1b--Extend the program to include not just membership, but the mapping of keys to bindings.
-  * Done, see function lookup. Still need to write some tests.
+  * Done, see function `lookup`. Still need to write some tests.
 * Exercise 1c--These trees are not balanced. Demonstrate the behavior on the following two sequences of insertions.
   * t s p i p f b s t:
                     

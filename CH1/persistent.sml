@@ -1,3 +1,7 @@
+(* Function lookupbool is a member function that returns true if 
+   the searched item is found else false. 
+   Function lookup provides mappings from keys to values. *)
+
 type key = string
 
 datatype tree = LEAF | TREE of tree * key * tree
@@ -22,12 +26,12 @@ fun lookupbool(key,LEAF) = false
          then lookupbool(key,r)
        else lookupbool(key,l)
 
-(* Function lookupkv throws Key_not_found_in_binary_search_tree exception. *)
+(* Function lookup throws Key_not_found_in_binary_search_tree exception. *)
 
-fun lookupkv(key,LEAF) = raise Key_not_found_in_binary_search_tree("")
-  | lookupkv(key,TREE(l,k,r)) =
+fun lookup(key,LEAF) = raise Key_not_found_in_binary_search_tree("")
+  | lookup(key,TREE(l,k,r)) =
        if key = k
          then k
        else if key>k
-         then lookupkv(key,r)
-       else lookupkv(key,l)
+         then lookup(key,r)
+       else lookup(key,l)

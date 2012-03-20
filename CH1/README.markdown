@@ -37,4 +37,6 @@ complicated with insertion. The overhead of node manipulations for insertion cou
 insertion-balancing method from the standard BST. Can perform with logarithmic complexity for all searches and insertions.
 We can implement a symbol table where a search operation for a key in a file of 1 million items requires only 20-40 comparisons.
 Also, little overhead is associated with each comparison.
-  * Skip Lists?
+  * Skip Lists? This data structure uses extra links in the nodes of a linked list to skip through large portions of a list during a search.
+The underlying data structure is nothing more than an alternative representation of a balanced tree.
+  * Compare and Contrast?

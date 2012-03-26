@@ -40,4 +40,4 @@ Also, little overhead is associated with each comparison.
   * Skip Lists? This data structure uses extra links in the nodes of a linked list to skip through large portions of a list during a search.
 The underlying data structure is nothing more than an alternative representation of a balanced tree.
   * Final answer? *red-black BSTs are attractive for symbol-table library implementations, because they provide 
-guaranteed performance bounds in the worst case and the fastest search and insertion algorithms for random data.
+guaranteed performance bounds in the worst case and the fastest search and insertion algorithms for random data.*

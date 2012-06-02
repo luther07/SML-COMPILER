@@ -52,10 +52,11 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id*int) list): (id*i
           (print finalString; print "\n"; finalTable)
        end
 
-(* The call to the lookup function below will throw an exception called 
- * Table_lookup_key_not_found, if the symbol is not found in the table. This
- * exception makes sense. When a program tries to use a nonexistent variable
+(* The call to the lookup function below will throw an uncaught exception
+ * called Table_lookup_key_not_found, if the symbol is not found in the table.
+ * This exception makes sense. When a program tries to use a nonexistent variable
  * then an exception should be thrown when . *)
+
 and interpExp(IdExp(variable), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
           val subResult = lookup(symbolTable, variable)

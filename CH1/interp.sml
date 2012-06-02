@@ -15,8 +15,7 @@
 exception Key_binding_not_found of int
 
 (* helper functions *)
-fun update([], c: id, i: int): (id*int) list = (c, i) :: []
-  | update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
+fun update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
 
 fun lookup([], a: id): int list = raise Key_binding_not_found(~1000000)
   | lookup((x:id,y:int) :: pairs, a: id): int list = 
@@ -24,7 +23,7 @@ fun lookup([], a: id): int list = raise Key_binding_not_found(~1000000)
         then [y] 
       else lookup(pairs, a)
 
-(* mutually recursive functions *)
+(* two mutually recursive functions *)
 fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
     let 
        val firstTable = interpStm(a, tbl)
@@ -53,11 +52,10 @@ fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
           (print aString; print "\n"; aTable)
        end
 
-(* The call to the lookup function below will throw exception,
- * Table_lookup_key_not_found if the key is not found in the table. This
- * exception makes sense. If a variable binding does not exist when
- * it should, an exception should be thrown. *)
-
+(* The call to the lookup function below will throw an exception called 
+ * Table_lookup_key_not_found, if the symbol is not found in the table. This
+ * exception makes sense. When a program tries to use a nonexistent variable
+ * then an exception should be thrown when . *)
 and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
        let 
           val subResult = lookup(tbl, a)

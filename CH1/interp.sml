@@ -38,18 +38,18 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id * int) list): (id
           update(newSymbolTable, a, numberValue)
        end
 
-   |interpStm(PrintStm([]), tbl: (id * int) list): (id*int) list =
-       tbl
+   |interpStm(PrintStm([]), symbolTable: (id * int) list): (id*int) list =
+       symbolTable
 
-   |interpStm(PrintStm(first::rest), tbl:(id * int) list): (id * int) list =
-       let val (aString, aTable) =
+   |interpStm(PrintStm(firstExpression::restExpressions), symbolTable:(id * int) list): (id * int) list =
+       let val (finalString, finalTable) =
           let
-             val (aNum, aTab) = interpExp(first, tbl);
+             val (numberValue, newSymbolTable) = interpExp(firstExpression, symbolTable);
           in
-             (Int.toString aNum, aTab)
+             (Int.toString numberValue, newSymbolTable)
           end
        in
-          (print aString; print "\n"; aTable)
+          (print finalString; print "\n"; finalTable)
        end
 
 (* The call to the lookup function below will throw an exception called 

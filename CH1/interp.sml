@@ -14,28 +14,28 @@
 
 exception Key_binding_not_found of int
 
-(* helper functions *)
-fun update(tbl: (id*int) list, c: id, i: int): (id*int) list = (c, i) :: tbl
+(* two private helper functions *)
+fun update(symbolTable:(id*int) list, symbol:id, value:int): (id*int) list = (symbol,value) :: symbolTable
 
-fun lookup([], a: id): int list = raise Key_binding_not_found(~1000000)
-  | lookup((x:id,y:int) :: pairs, a: id): int list = 
-      if (x=a) 
-        then [y] 
-      else lookup(pairs, a)
+fun lookup(symbolTable:(id*int) list, searchSymbol:id) = case symbolTable of
+  [] => raise Key_binding_not_found(~1000000)
+ |(firstSymbol,firstValue)::restTable => if (firstSymbol=searchSymbol)
+                              then [firstValue]
+                            else lookup(restTable,searchSymbol)
 
 (* two mutually recursive functions *)
-fun interpStm(CompoundStm(a,b), tbl:(id * int) list): (id*int) list =
+fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id * int) list): (id*int) list =
     let 
-       val firstTable = interpStm(a, tbl)
+       val firstTable = interpStm(firstStmt,symbolTable)
     in
-       interpStm(b, firstTable)
+       interpStm(restStmt,firstTable)
     end
 
-   |interpStm(AssignStm(a,b), tbl:(id * int) list): (id*int) list =
+   |interpStm(AssignStm(a,b), symbolTable:(id * int) list): (id*int) list =
        let 
-          val (aNum, aTable) = interpExp(b,tbl)
+          val (numberValue, newSymbolTable) = interpExp(b,symbolTable)
        in 
-          update(tbl, a, aNum)
+          update(newSymbolTable, a, numberValue)
        end
 
    |interpStm(PrintStm([]), tbl: (id * int) list): (id*int) list =

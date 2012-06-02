@@ -41,10 +41,10 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id*int) list): (id*i
    |interpStm(PrintStm([]), symbolTable: (id*int) list): (id*int) list =
        symbolTable
 
-   |interpStm(PrintStm(firstExpression::restExpressions), symbolTable:(id*int) list): (id * int) list =
+   |interpStm(PrintStm(firstExpr::restExpr), symbolTable:(id*int) list): (id * int) list =
        let val (finalString, finalTable) =
           let
-             val (numberValue, newSymbolTable) = interpExp(firstExpression, symbolTable);
+             val (numberValue, newSymbolTable) = interpExp(firstExpr, symbolTable);
           in
              (Int.toString numberValue, newSymbolTable)
           end
@@ -56,48 +56,46 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id*int) list): (id*i
  * Table_lookup_key_not_found, if the symbol is not found in the table. This
  * exception makes sense. When a program tries to use a nonexistent variable
  * then an exception should be thrown when . *)
-and interpExp(IdExp(a), tbl:(id*int) list): (int*(id*int) list) =
+and interpExp(IdExp(variable), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val subResult = lookup(tbl, a)
-          val intResult = hd subResult
+          val subResult = lookup(symbolTable, variable)
+          val number = hd subResult
        in
-          (intResult, tbl)
+          (number, symbolTable)
        end
-   |interpExp(NumExp(a), tbl:(id*int) list): (int*(id*int) list) =
-       (a, tbl)
-
-   |interpExp(OpExp(a,Plus,c), tbl:(id*int) list): (int*(id*int) list) =
+   |interpExp(NumExp(number), symbolTable:(id*int) list): (int*(id*int) list) =
+       (number, symbolTable)
+   |interpExp(OpExp(firstExpr,Plus,secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val (resultOne, t1) = interpExp(a, tbl);
-          val (resultTwo, bindingsTable) = interpExp(c, t1)
+          val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable);
+          val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
        in 
-          ((resultOne + resultTwo), bindingsTable)
+          ((resultOne + resultTwo), finalSymbolTable)
        end
-   |interpExp(OpExp(a, Minus, c), tbl:(id*int) list): (int*(id*int) list) =
+   |interpExp(OpExp(firstExpr, Minus, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val (resultOne, t1) = interpExp(a, tbl)
-          val (resultTwo, bindingsTable) = interpExp(c, t1)
+          val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
+          val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
        in 
-          ((resultOne - resultTwo), bindingsTable)
+          ((resultOne - resultTwo), finalSymbolTable)
        end
-   |interpExp(OpExp(a, Times, c), tbl:(id*int) list): (int*(id*int) list) =
+   |interpExp(OpExp(firstExpr, Times, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val (resultOne, t1) = interpExp(a, tbl)
-          val (resultTwo, bindingsTable) = interpExp(c, t1)
+          val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
+          val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
        in 
-          ((resultOne * resultTwo), bindingsTable)
+          ((resultOne * resultTwo), finalSymbolTable)
        end
-   |interpExp(OpExp(a, Div, c), tbl:(id*int) list): (int*(id*int) list) =
+   |interpExp(OpExp(firstExpr, Div, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val (resultOne, t1) = interpExp(a, tbl)
-          val (resultTwo, bindingsTable) = interpExp(c, t1)
+          val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
+          val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
        in 
-          ((resultOne div resultTwo), bindingsTable)
+          ((resultOne div resultTwo), finalSymbolTable)
        end
-
-   |interpExp(EseqExp(a,b), tbl:(id*int) list): (int*(id*int) list) =
+   |interpExp(EseqExp(firstExpr,restExprs), symbolTable:(id*int) list): (int*(id*int) list) =
        let 
-          val bindingsTable = interpStm(a, tbl)
+          val finalSymbolTable = interpStm(firstExpr, symbolTable)
        in 
-          interpExp(b, bindingsTable)
+          interpExp(restExprs, finalSymbolTable)
        end

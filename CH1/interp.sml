@@ -24,7 +24,7 @@ fun lookup(symbolTable:(id*int) list, searchSymbol:id) = case symbolTable of
                             else lookup(restTable,searchSymbol)
 
 (* two mutually recursive functions *)
-fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id * int) list): (id*int) list =
+fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id*int) list): (id*int) list =
     let 
        val firstTable = interpStm(firstStmt,symbolTable)
     in
@@ -38,10 +38,10 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id * int) list): (id
           update(newSymbolTable, a, numberValue)
        end
 
-   |interpStm(PrintStm([]), symbolTable: (id * int) list): (id*int) list =
+   |interpStm(PrintStm([]), symbolTable: (id*int) list): (id*int) list =
        symbolTable
 
-   |interpStm(PrintStm(firstExpression::restExpressions), symbolTable:(id * int) list): (id * int) list =
+   |interpStm(PrintStm(firstExpression::restExpressions), symbolTable:(id*int) list): (id * int) list =
        let val (finalString, finalTable) =
           let
              val (numberValue, newSymbolTable) = interpExp(firstExpression, symbolTable);
@@ -56,38 +56,38 @@ fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id * int) list): (id
  * Table_lookup_key_not_found, if the symbol is not found in the table. This
  * exception makes sense. When a program tries to use a nonexistent variable
  * then an exception should be thrown when . *)
-and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
+and interpExp(IdExp(a), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val subResult = lookup(tbl, a)
           val intResult = hd subResult
        in
           (intResult, tbl)
        end
-   |interpExp(NumExp(a), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(NumExp(a), tbl:(id*int) list): (int*(id*int) list) =
        (a, tbl)
 
-   |interpExp(OpExp(a,Plus,c), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(OpExp(a,Plus,c), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val (resultOne, t1) = interpExp(a, tbl);
           val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
           ((resultOne + resultTwo), bindingsTable)
        end
-   |interpExp(OpExp(a, Minus, c), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(OpExp(a, Minus, c), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val (resultOne, t1) = interpExp(a, tbl)
           val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
           ((resultOne - resultTwo), bindingsTable)
        end
-   |interpExp(OpExp(a, Times, c), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(OpExp(a, Times, c), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val (resultOne, t1) = interpExp(a, tbl)
           val (resultTwo, bindingsTable) = interpExp(c, t1)
        in 
           ((resultOne * resultTwo), bindingsTable)
        end
-   |interpExp(OpExp(a, Div, c), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(OpExp(a, Div, c), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val (resultOne, t1) = interpExp(a, tbl)
           val (resultTwo, bindingsTable) = interpExp(c, t1)
@@ -95,7 +95,7 @@ and interpExp(IdExp(a), tbl:(id * int) list): (int*(id*int) list) =
           ((resultOne div resultTwo), bindingsTable)
        end
 
-   |interpExp(EseqExp(a,b), tbl:(id * int) list): (int*(id*int) list) =
+   |interpExp(EseqExp(a,b), tbl:(id*int) list): (int*(id*int) list) =
        let 
           val bindingsTable = interpStm(a, tbl)
        in 

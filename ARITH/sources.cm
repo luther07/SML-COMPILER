@@ -1,0 +1,6 @@
+Library
+  structure Real
+  signature ARITH
+is
+  ARITH.sml
+  Real.sml    

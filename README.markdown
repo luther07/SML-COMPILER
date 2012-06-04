@@ -30,5 +30,11 @@
   part 2 and added an exception to the lookup function. The lookup function
   used by the interpreter will throw an exception if the binding isn't found.
 
+  6/3/12
+  Added signature, structure, and compilation manager file to project.
+  Now you can run my project with commang 'CM.make "sources.cm;", followed
+  by imporing the module into the top-level with something like:
+  'structure S = Interpreter;'
+
   TODO: currently researching to identify best balanced BST for functional symbol table in Sedgewick[1998].
   TODO: write good tests to cover the code in maxargs.sml, interp.sml, and persistent.sml.

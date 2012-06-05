@@ -6,7 +6,7 @@
 
 ###### I am learning to implement a compiler by implementing a compiler.
 
-* Implemented part 1 of the Straight Line Program Interpreter, 
+* Implemented part 1 of the Straight Line Program Interpreter: 
   the _maxargs_ function that counts the maximum number of
   argumentss to a PrintStm constructor in a nested statement.
 

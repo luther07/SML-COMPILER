@@ -8,7 +8,7 @@
 
 * Implemented part 1 of the Straight Line Program Interpreter: 
   the _maxargs_ function that counts the maximum number of
-  argumentss to a PrintStm constructor in a nested statement.
+  argumentss to all PrintStm constructors in a nested statement.
 
 * Implemented part 2 of the Straight Line Interpreter, renamed
   the mutually recursive functions maxargsStm and maxargsExp.

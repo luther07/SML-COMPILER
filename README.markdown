@@ -7,8 +7,9 @@
 ###### I am learning to implement a compiler by implementing a compiler.
 
 * Implemented part 1 of the Straight Line Program Interpreter:
-  the _maxargs_ function in structure _Interpreter_ counts the maximum number
-  of argumentss to all PrintStm constructors in a nested statement.
+  the _maxargsStm_ and _maxargsExp_ functions in structure _Interpreter_
+  counts the maximum number of argumentss to all PrintStm constructors
+  in a nested statement.
 
 * Implemented part 2 of the Straight Line Interpreter, renamed
   the mutually recursive functions _maxargsStm_ and _maxargsExp_.

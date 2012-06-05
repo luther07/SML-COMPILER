@@ -26,7 +26,6 @@ structure Interpreter : INTERPRETER =
 
   exception Key_binding_not_found of int
   type symtable = (id*int) list
-  val sample = AssignStm("a", OpExp(NumExp 5, Plus, NumExp 3))
 
   (* two private helper functions *)
   fun update(symbolTable:(id*int) list, symbol:id, value:int): (id*int) list = (symbol,value) :: symbolTable

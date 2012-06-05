@@ -21,5 +21,4 @@ signature INTERPRETER =
    val interpExp   : (exp*symtable) -> int*symtable
    val maxargsStm  : stm -> int
    val maxargsExp  : exp -> int
-   val sample      : stm
  end;

@@ -2,8 +2,8 @@ Group
   signature INTERPRETER
   structure Interpreter
 is
-  interpreter.sig
-  Interpreter.sml
+  interpreter-sig.sml
+  interpreter.sml
 
   $/basis.cm
   $/smlnj-lib.cm

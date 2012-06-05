@@ -1,13 +1,13 @@
 # Per L.C. Paulson, "...ML makes it easy to write clear, reliable programs".
 
-###### I have the book, Modern Compiler Implementation in ML.
+###### I have the book, _Modern Compiler Implementation in ML_.
 
 ###### I have installed sml/nj and associated tools.
 
 ###### I am learning to implement a compiler by implementing a compiler.
 
 * Implemented part 1 of the Straight Line Program Interpreter, 
-  which is a max args function that counts the maximum number of
+  the _maxargs_ function that counts the maximum number of
   argumentss to a PrintStm constructor in a nested statement.
 
 * Implemented part 2 of the Straight Line Interpreter, renamed
@@ -21,7 +21,7 @@
 
 * Added a signature file and packaged the interpreter inside a structure.
   Also added compilation manager file to project. Now you can run my project 
-  with command: _CM.make "sources.cm";_, followed by importing the module into 
+  with command: _CM.make "sources.cm";_ followed by importing the module into 
   the top-level with something like: _structure S = Interpreter;_
 
   TODO: currently researching to identify best balanced BST for functional symbol table in Sedgewick[1998].

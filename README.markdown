@@ -1,10 +1,10 @@
 # Per L.C. Paulson, "...ML makes it easy to write clear, reliable programs".
 
-### I have the book, Modern Compiler Implementation in ML.
+###### I have the book, Modern Compiler Implementation in ML.
 
-### I have installed sml/nj and associated tools.
+###### I have installed sml/nj and associated tools.
 
-### I am learning to implement a compiler by implementing a compiler.
+###### I am learning to implement a compiler by implementing a compiler.
 
   10/19/11
   I have implemented part 1 of the Straight Line Program Interpreter from

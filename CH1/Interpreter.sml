@@ -13,6 +13,7 @@
  ***********************************************************************)
 structure Interpreter : INTERPRETER =
   struct
+  (* Below are the provided abstract syntax definitions *)
   type id = string
   datatype binop = Plus | Minus | Times | Div
   datatype stm = CompoundStm of stm*stm
@@ -38,16 +39,16 @@ structure Interpreter : INTERPRETER =
 
   (* two mutually recursive functions *)
   fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:(id*int) list): (id*int) list =
-      let 
+      let
          val firstTable = interpStm(firstStmt,symbolTable)
       in
          interpStm(restStmt,firstTable)
       end
 
      |interpStm(AssignStm(a,b), symbolTable:(id * int) list): (id*int) list =
-         let 
+         let
             val (numberValue, newSymbolTable) = interpExp(b,symbolTable)
-         in 
+         in
             update(newSymbolTable, a, numberValue)
          end
 
@@ -71,7 +72,7 @@ structure Interpreter : INTERPRETER =
    * then an exception should be thrown when . *)
 
   and interpExp(IdExp(variable), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val subResult = lookup(symbolTable, variable)
             val number = hd subResult
          in
@@ -80,37 +81,74 @@ structure Interpreter : INTERPRETER =
      |interpExp(NumExp(number), symbolTable:(id*int) list): (int*(id*int) list) =
          (number, symbolTable)
      |interpExp(OpExp(firstExpr,Plus,secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable);
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
-         in 
+         in
             ((resultOne + resultTwo), finalSymbolTable)
          end
      |interpExp(OpExp(firstExpr, Minus, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
-         in 
+         in
             ((resultOne - resultTwo), finalSymbolTable)
          end
      |interpExp(OpExp(firstExpr, Times, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
-         in 
+         in
             ((resultOne * resultTwo), finalSymbolTable)
          end
      |interpExp(OpExp(firstExpr, Div, secondExpr), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
-         in 
+         in
             ((resultOne div resultTwo), finalSymbolTable)
          end
      |interpExp(EseqExp(firstExpr,restExprs), symbolTable:(id*int) list): (int*(id*int) list) =
-         let 
+         let
             val finalSymbolTable = interpStm(firstExpr, symbolTable)
-         in 
+         in
             interpExp(restExprs, finalSymbolTable)
          end
+
+  (* An ML function (maxargs : stm->int) that tells the maximum number
+   * of arguments of all print statements within a given statement. *)
+
+  fun maxargsStm(CompoundStm(a,b))
+      = if maxargsStm(a) >= maxargsStm(b)
+           then maxargsStm(a)
+           else maxargsStm(b)
+     |maxargsStm(AssignStm(a,b))
+      = maxargsExp(b)
+     |maxargsStm(PrintStm(xs)) =
+         let
+            val printArgs = length xs
+            fun traverse (member, maxi) =
+               case member of
+                  [] => 0
+                 |last::[] => if maxi > maxargsExp(last)
+                                then maxi
+                              else maxargsExp(last)
+                 |first::rest => if maxi > maxargsExp(first)
+                                   then traverse(rest,maxi)
+                                 else traverse(rest, maxargsExp(first))
+         in
+            traverse(xs,printArgs)
+         end
+
+  and maxargsExp(IdExp(_))
+      = 0
+     |maxargsExp(NumExp(_))
+      = 0
+     |maxargsExp(OpExp(_,_,_))
+      = 0
+     |maxargsExp(EseqExp(a,b))
+      = if maxargsStm(a) >= maxargsExp(b)
+           then maxargsStm(a)
+           else maxargsExp(b)
   end;
+

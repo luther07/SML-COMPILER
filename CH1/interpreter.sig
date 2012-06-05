@@ -9,15 +9,17 @@ signature INTERPRETER =
    type stm
    type exp
    val CompoundStm : stm*stm -> stm
-   val AssignStm : string*exp -> stm
-   val PrintStm : exp list -> stm
-   val IdExp : string -> exp
-   val NumExp : int -> exp
-   val OpExp : exp*binop*exp -> exp
-   val EseqExp : stm*exp -> exp
+   val AssignStm   : string*exp -> stm
+   val PrintStm    : exp list -> stm
+   val IdExp       : string -> exp
+   val NumExp      : int -> exp
+   val OpExp       : exp*binop*exp -> exp
+   val EseqExp     : stm*exp -> exp
    exception Key_binding_not_found of int
    type symtable
-   val interpStm : (stm*symtable) -> symtable
-   val interpExp : (exp*symtable) -> int*symtable
-   val sample : stm
+   val interpStm   : (stm*symtable) -> symtable
+   val interpExp   : (exp*symtable) -> int*symtable
+   val maxargsStm  : stm -> int
+   val maxargsExp  : exp -> int
+   val sample      : stm
  end;

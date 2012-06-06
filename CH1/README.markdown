@@ -14,7 +14,7 @@
 
 * Start the interpreter from inside folder $/SML-COMPILER/CH1 with command 'sml'
 
-* Type 'CM.make "sources.cm";' into the interpreter
+* Type 'CM.make "sources.cm";' into the interpreter to build/load the definitions.
 
 * For easy access to the structure, open the structure with 'open Interpreter;'
 

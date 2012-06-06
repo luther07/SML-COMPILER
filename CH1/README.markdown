@@ -2,7 +2,7 @@
 
 ###### _sources.cm_ : compilation manager build file for structure _Interpreter_.
 
-###### interpreter-sig.sml : signature file, defines signature _SIGNATURE_.
+###### interpreter-sig.sml : signature file, defines signature _INTERPRETER_.
 
 ###### interpreter.sml : defines structure _Interpreter_ is, the implementation file.
 

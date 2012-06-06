@@ -24,37 +24,37 @@ structure Interpreter : INTERPRETER =
                 |OpExp of exp*binop*exp
                 |EseqExp of stm*exp
 
-  exception Key_binding_not_found of int
-  type symtable = (id*int) list
+  exception KeyBindingNotFound of int
+  type sym_table = (id*int) list
 
   (* two private helper functions *)
-  fun update(symbolTable:symtable, symbol:id, value:int): symtable = (symbol,value) :: symbolTable
+  fun update(symbolTable:sym_table, symbol:id, value:int): sym_table = (symbol,value) :: symbolTable
 
-  fun lookup(symbolTable:symtable, searchSymbol:id) = case symbolTable of
-    [] => raise Key_binding_not_found(~1000000)
+  fun lookup(symbolTable:sym_table, searchSymbol:id) = case symbolTable of
+    [] => raise KeyBindingNotFound(~1000000)
    |(firstSymbol,firstValue)::restTable => if (firstSymbol=searchSymbol)
                               then [firstValue]
                             else lookup(restTable,searchSymbol)
 
   (* two mutually recursive functions *)
-  fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:symtable): symtable =
+  fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:sym_table): sym_table =
       let
          val firstTable = interpStm(firstStmt,symbolTable)
       in
          interpStm(restStmt,firstTable)
       end
 
-     |interpStm(AssignStm(a,b), symbolTable:symtable): symtable =
+     |interpStm(AssignStm(a,b), symbolTable:sym_table): sym_table =
          let
             val (numberValue, newSymbolTable) = interpExp(b,symbolTable)
          in
             update(newSymbolTable, a, numberValue)
          end
 
-     |interpStm(PrintStm([]), symbolTable: symtable): symtable =
+     |interpStm(PrintStm([]), symbolTable: sym_table): sym_table =
          symbolTable
 
-     |interpStm(PrintStm(firstExpr::restExpr), symbolTable:symtable): symtable =
+     |interpStm(PrintStm(firstExpr::restExpr), symbolTable:sym_table): sym_table =
          let val (finalString, finalTable) =
             let
                val (numberValue, newSymbolTable) = interpExp(firstExpr, symbolTable);
@@ -70,44 +70,44 @@ structure Interpreter : INTERPRETER =
    * This exception makes sense. When a program tries to use a nonexistent variable
    * then an exception should be thrown when . *)
 
-  and interpExp(IdExp(variable), symbolTable:symtable): (int*symtable) =
+  and interpExp(IdExp(variable), symbolTable:sym_table): (int*sym_table) =
          let
             val subResult = lookup(symbolTable, variable)
             val number = hd subResult
          in
             (number, symbolTable)
          end
-     |interpExp(NumExp(number), symbolTable:symtable): (int*symtable) =
+     |interpExp(NumExp(number), symbolTable:sym_table): (int*sym_table) =
          (number, symbolTable)
-     |interpExp(OpExp(firstExpr,Plus,secondExpr), symbolTable:symtable): (int*symtable) =
+     |interpExp(OpExp(firstExpr,Plus,secondExpr), symbolTable:sym_table): (int*sym_table) =
          let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable);
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
          in
             ((resultOne + resultTwo), finalSymbolTable)
          end
-     |interpExp(OpExp(firstExpr, Minus, secondExpr), symbolTable:symtable): (int*symtable) =
+     |interpExp(OpExp(firstExpr, Minus, secondExpr), symbolTable:sym_table): (int*sym_table) =
          let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
          in
             ((resultOne - resultTwo), finalSymbolTable)
          end
-     |interpExp(OpExp(firstExpr, Times, secondExpr), symbolTable:symtable): (int*symtable) =
+     |interpExp(OpExp(firstExpr, Times, secondExpr), symbolTable:sym_table): (int*sym_table) =
          let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
          in
             ((resultOne * resultTwo), finalSymbolTable)
          end
-     |interpExp(OpExp(firstExpr, Div, secondExpr), symbolTable:symtable): (int*symtable) =
+     |interpExp(OpExp(firstExpr, Div, secondExpr), symbolTable:sym_table): (int*sym_table) =
          let
             val (resultOne, newSymbolTable) = interpExp(firstExpr, symbolTable)
             val (resultTwo, finalSymbolTable) = interpExp(secondExpr, newSymbolTable)
          in
             ((resultOne div resultTwo), finalSymbolTable)
          end
-     |interpExp(EseqExp(firstExpr,restExprs), symbolTable:symtable): (int*symtable) =
+     |interpExp(EseqExp(firstExpr,restExprs), symbolTable:sym_table): (int*sym_table) =
          let
             val finalSymbolTable = interpStm(firstExpr, symbolTable)
          in

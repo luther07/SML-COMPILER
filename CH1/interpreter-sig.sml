@@ -1,6 +1,6 @@
 signature INTERPRETER =
  sig
-   type id 
+   type id
    type binop
    val Plus : binop
    val Minus : binop
@@ -15,10 +15,11 @@ signature INTERPRETER =
    val NumExp      : int -> exp
    val OpExp       : exp*binop*exp -> exp
    val EseqExp     : stm*exp -> exp
-   exception Key_binding_not_found of int
-   type symtable
-   val interpStm   : (stm*symtable) -> symtable
-   val interpExp   : (exp*symtable) -> int*symtable
+   exception KeyBindingNotFound of int
+   type sym_table
+   val interpStm   : (stm*sym_table) -> sym_table
+   val interpExp   : (exp*sym_table) -> int*sym_table
    val maxargsStm  : stm -> int
    val maxargsExp  : exp -> int
  end;
+

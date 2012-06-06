@@ -4,7 +4,7 @@
 
 ###### interpreter-sig.sml : signature file, defines signature _INTERPRETER_.
 
-###### interpreter.sml : defines structure _Interpreter_ is, the implementation file.
+###### interpreter.sml : defines structure _Interpreter_, the implementation file.
 
 ### Steps to see this code in action:
 

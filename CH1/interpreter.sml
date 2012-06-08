@@ -11,8 +11,8 @@
  * that some identifiers map to different integers as a result of the
  * statement.
  ***********************************************************************)
-structure Interpreter : INTERPRETER =
-  struct
+structure Interpreter : INTERPRETER = struct
+
   (* Below are the provided abstract syntax definitions *)
   type id = string
   datatype binop = Plus | Minus | Times | Div
@@ -28,13 +28,25 @@ structure Interpreter : INTERPRETER =
   type sym_table = (id*int) list
 
   (* two private helper functions *)
-  fun update(symbolTable:sym_table, symbol:id, value:int): sym_table = (symbol,value) :: symbolTable
+  fun update(symbolTable:sym_table, symbol:id, value:int): sym_table =
+    (symbol,value) :: symbolTable
 
   fun lookup(symbolTable:sym_table, searchSymbol:id) = case symbolTable of
     [] => raise KeyBindingNotFound(~1000000)
    |(firstSymbol,firstValue)::restTable => if (firstSymbol=searchSymbol)
                               then [firstValue]
                             else lookup(restTable,searchSymbol)
+
+  fun help() =
+    print "****Welcome to the Straight Line Program Interpreter!!\n\
+      \****You are using a structure called: Interpreter.\n\
+      \****You should prefix your use of structure components with the structure name, Interpreter.\n\
+      \****Or you can define an alias for structure in the top-level environment.\n\
+      \****The type Interpreter.id is an alias for type string.\n\
+      \Available atomic constructor functions are:\n\
+      \\tInterpreter.IdExp: Interpreter.id -> Interpreter.exp\n\
+      \\tInterpreter.NumExp: int -> Interpreter.exp\n\
+      \Practice using these constructor functions until you've mastered them!\n"
 
   (* two mutually recursive functions *)
   fun interpStm(CompoundStm(firstStmt,restStmt), symbolTable:sym_table): sym_table =
@@ -57,7 +69,8 @@ structure Interpreter : INTERPRETER =
      |interpStm(PrintStm(firstExpr::restExpr), symbolTable:sym_table): sym_table =
          let val (finalString, finalTable) =
             let
-               val (numberValue, newSymbolTable) = interpExp(firstExpr, symbolTable);
+               val (numberValue, newSymbolTable) =
+                 interpExp(firstExpr, symbolTable);
             in
                (Int.toString numberValue, newSymbolTable)
             end

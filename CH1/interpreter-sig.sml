@@ -21,5 +21,6 @@ signature INTERPRETER =
    val interpExp   : (exp*sym_table) -> int*sym_table
    val maxargsStm  : stm -> int
    val maxargsExp  : exp -> int
+   val help        : unit -> unit
  end;
 

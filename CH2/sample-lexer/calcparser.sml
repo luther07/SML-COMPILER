@@ -50,22 +50,22 @@ and STMT() =
     case !nexttok
       of EOS => (advance())
        | _ => error())
-and E () = E’ (T())
-and E’ (i : int ) =
+and E () = E'(T())
+and E' (i : int ) =
     case !nexttok of
-       PLUS => (advance (); E’(i+T()))
-     | SUB => (advance (); E’(i-T()))
+       PLUS => (advance (); E'(i+T()))
+     | SUB => (advance (); E'(i-T()))
      | RPAREN => i
      | EOF => i
      | EOS => i
      | _ => error()
-and T () = T’(F())
-and T’ i =
+and T () = T'(F())
+and T' i =
    case !nexttok of
        PLUS => i
      | SUB => i
-     | TIMES => (advance(); T’(i*F()))
-     | DIV => (advance (); T’(i div F()))
+     | TIMES => (advance(); T'(i*F()))
+     | DIV => (advance (); T'(i div F()))
      | EOF => i
      | EOS => i
      | RPAREN => i

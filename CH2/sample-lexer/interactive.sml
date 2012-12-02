@@ -15,5 +15,5 @@ val lexer =
 		end
      	in loop nil
         end
-  in CalcLex.makeLexer (fn n => input_line std_in)
+  in CalcLex.makeLexer (fn n => input_line stdIn)
   end

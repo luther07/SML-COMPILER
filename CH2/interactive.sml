@@ -1,3 +1,6 @@
+(* lexer receives the return value from a call to Mlex.makeLexer.
+   We are passing a function int->string to Mlex.makeLexer. *)
+
 val lexer =
   let val input_line = fn f =>
         let 

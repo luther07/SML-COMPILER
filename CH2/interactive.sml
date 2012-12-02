@@ -3,7 +3,7 @@ val lexer =
         let 
 	    fun loop result =
             	let 
-		    val c = input (f,1)
+		    val c = TextIO.inputN (f,1)
        		    val result = c :: result
            	in 
 		   if String.size c = 0 orelse c = "\n" then

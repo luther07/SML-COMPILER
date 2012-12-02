@@ -1,0 +1,16 @@
+val lexer =
+  let val input_line = fn f =>
+        let 
+	    fun loop result =
+            	let 
+		    val c = input (f,1)
+       		    val result = c :: result
+           	in 
+		   if String.size c = 0 orelse c = "\n" then
+                   String.implode (rev result)
+    		   else loop result
+		end
+     	in loop nil
+        end
+  in Mlex.makeLexer (fn n => input_line std_in)
+  end

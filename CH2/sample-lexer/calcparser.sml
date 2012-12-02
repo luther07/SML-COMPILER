@@ -18,22 +18,24 @@ structure Calc =
    exception Error
    fun parse strm =
     let
-      val say = fn s => output(std_out,s)
+      val say = fn s => TextIO.output(TextIO.stdOut,s)
       val input_line = fn f =>
-           let fun loop result =
-              let val c = input (f,1)
-         val result = c :: result
-        in if String.size c = 0 orelse c = "\n" then
- String.implode (rev result)
-    else loop result
-end
+           let 
+	       fun loop result =
+               	   let val c = TextIO.inputN (f,1)
+         	   val result = c :: result
+           in 
+	      if String.size c = 0 orelse c = "\n" then
+ 	      foldl op^ "" result
+    	      else loop result
+	   end
      in loop nil
      end
  val lexer = makeLexer (fn n => input_line strm)
  val nexttok = ref (lexer())
  val advance = fn () => (nexttok := lexer(); !nexttok)
- val error = fn () => (say ("calc: syntax error on line" ^
-                      (makestring(!linenum)) ^ "\n"); raise Error)
+ val error = fn () => (say ("calc: syntax error on line " ^
+                      (Int.toString(!linenum)) ^ "\n"); raise Error)
  val lookup = fn i =>
    if i = "ONE" then 1
    else if i = "TWO" then 2
@@ -45,7 +47,7 @@ fun STMT_LIST () =
 and STMT() =
     (case !nexttok
       of EOS => ()
-       | PRINT => (advance(); say ((makestring (E():int)) ^ "\n"); ())
+       | PRINT => (advance(); say ((Int.toString (E():int)) ^ "\n"); ())
        | _ => (E(); ());
     case !nexttok
       of EOS => (advance())
@@ -60,7 +62,7 @@ and E' (i : int ) =
      | EOS => i
      | _ => error()
 and T () = T'(F())
-and T' i =
+and T' (i : int ) =
    case !nexttok of
        PLUS => i
      | SUB => i
@@ -69,16 +71,16 @@ and T' i =
      | EOF => i
      | EOS => i
      | RPAREN => i
-         | _ => error()
-    and F () =
-       case !nexttok of
-           ID i => (advance(); lookup i)
-         | LPAREN =>
-             let val v = (advance(); E())
-             in if !nexttok = RPAREN then (advance (); v) else error()
-             end
-         | NUM i => (advance(); i)
-         | _ => error()
+     | _ => error()
+and F () =
+   case !nexttok of
+       ID i => (advance(); lookup i)
+     | LPAREN =>
+         let val v = (advance(); E())
+         in if !nexttok = RPAREN then (advance (); v) else error()
+         end
+     | NUM i => (advance(); i)
+     | _ => error()
    in STMT_LIST () handle Error => parse strm
    end
 end

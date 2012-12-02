@@ -7,7 +7,7 @@ val lexer =
        		    val result = c :: result
            	in 
 		   if String.size c = 0 orelse c = "\n" then
-                   String.implode (rev result)
+                   foldl op^ "" result
     		   else loop result
 		end
      	in loop nil

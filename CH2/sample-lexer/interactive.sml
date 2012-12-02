@@ -1,5 +1,5 @@
 (* lexer receives the return value from a call to Mlex.makeLexer.
-   We are passing a function int->string to Mlex.makeLexer. *)
+   We are passing a function int->string to CalcLex.makeLexer. *)
 
 val lexer =
   let val input_line = fn f =>
@@ -15,5 +15,5 @@ val lexer =
 		end
      	in loop nil
         end
-  in Mlex.makeLexer (fn n => input_line std_in)
+  in CalcLex.makeLexer (fn n => input_line std_in)
   end

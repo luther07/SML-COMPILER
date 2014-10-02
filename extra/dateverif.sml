@@ -1,17 +1,15 @@
 (* ML for the Working Programmer, Exercise 2.5, page 27. *)
 fun dateverif d m =
-   if (m = "September" 
+   ((m = "September" 
       orelse m = "April" 
       orelse m = "June"
       orelse m = "November")
       andalso d >=1 
-      andalso d <= 30
-      then true
-   else if m = "February" 
+      andalso d <= 30) orelse
+   (m = "February" 
       andalso d >= 1 
-      andalso d <= 28
-      then true
-   else if (m = "January"
+      andalso d <= 28) orelse
+   ((m = "January"
       orelse m = "March"
       orelse m = "May"
       orelse m = "July"
@@ -19,6 +17,4 @@ fun dateverif d m =
       orelse m = "October"
       orelse m = "December")
       andalso d >= 1
-      andalso d <= 31
-      then true
-   else false
+      andalso d <= 31)
